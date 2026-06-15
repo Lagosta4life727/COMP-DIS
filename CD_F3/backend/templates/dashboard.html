@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard IoT</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Geral.css') }}">
+</head>
+<body class="body2">
+
+<header class="cabecalho">
+    <nav class="navegacao">
+        <span class="user-name">{{ username }}</span>
+        <a href="/dashboard" class="botao">Dashboard IoT</a>
+        <a href="/showLojas" class="botao">Lojas (Mapa)</a>
+        <a href="/Logout" class="botao">Logout</a>
+    </nav>
+</header>
+
+<main class="conteudo2">
+    <h1>Dashboard de Sensores e Atuadores IoT</h1>
+    <p>Acompanhamento em tempo real dos dispositivos conectados (REST API & MQTT).</p>
+
+    <div class="dashboard-grid">
+        
+        <div class="card" id="weather-card">
+            <h3>Estação Meteorológica (Acesso: API REST)</h3>
+            <div class="metric">Temperatura: <span class="value" id="temp-val">A carregar...</span></div>
+            <div class="metric">Humidade: <span class="value" id="hum-val">A carregar...</span></div>
+            <div class="metric">Localização: <span class="value" id="weather-loc">-</span></div>
+            <div class="timestamp" id="weather-time">Última atualização: -</div>
+        </div>
+
+        <div class="card" id="socket-card">
+            <h3>Tomada Inteligente (Acesso: MQTT)</h3>
+            <div class="metric">Potência (Power): <span class="value" id="power-val">A carregar...</span></div>
+            <div class="metric">Tensão (Voltage): <span class="value" id="volts-val">A carregar...</span></div>
+            <div class="metric">Corrente (Current): <span class="value" id="current-val">A carregar...</span></div>
+            <div class="metric">Consumo Total: <span class="value" id="energy-val">A carregar...</span></div>
+            <div class="metric">Frequência: <span class="value" id="freq-val">A carregar...</span></div>
+            <div class="timestamp" id="socket-time">Última atualização: -</div>
+        </div>
+
+    </div>
+</main>
+
+<script>
+    async function atualizarWeatherREST() {
+        const urlREST = "https://cjsg.ddns.net:8443/weather/values";
+        
+        try {
+            const response = await fetch(urlREST, {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Erro HTTP: ${response.status}`);
+            }
+
+            const data = await response.json();
+            
+            document.getElementById('temp-val').innerText = data.temperature !== undefined ? `${data.temperature} °C` : "N/D";
+            document.getElementById('hum-val').innerText = data.humidity !== undefined ? `${data.humidity} %` : "N/D";
+            document.getElementById('weather-loc').innerText = data.name ? `${data.name} (${data.latitude}, ${data.longitude})` : "Disponível";
+            document.getElementById('weather-time').innerText = `Última atualização: ${data.time || new Date().toLocaleTimeString()}`;
+            
+        } catch (error) {
+            console.error("Erro CORS ou de Rede ao aceder à API REST Weather:", error);
+            document.getElementById('temp-val').innerText = "Erro (CORS/Rede)";
+            document.getElementById('hum-val').innerText = "Erro (CORS/Rede)";
+        }
+    }
+
+    async function atualizarSocketMQTT() {
+        try {
+            const response = await fetch('/api/iot/socket');
+            if (response.ok) {
+                const data = await response.json();
+                
+                document.getElementById('power-val').innerText = data.power !== undefined ? `${data.power} W` : "0 W";
+                document.getElementById('volts-val').innerText = data.voltage !== undefined ? `${data.voltage} V` : "0 V";
+                document.getElementById('current-val').innerText = data.current !== undefined ? `${data.current} A` : "0 A";
+                document.getElementById('energy-val').innerText = data.energy !== undefined ? `${data.energy} Wh` : "0 Wh";
+                document.getElementById('freq-val').innerText = data.frequency !== undefined ? `${data.frequency} Hz` : "0 Hz";
+                document.getElementById('socket-time').innerText = `Última atualização: ${data.time || new Date().toLocaleTimeString()}`;
+            }
+        } catch (error) {
+            console.error("Erro ao obter dados MQTT do backend:", error);
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        atualizarWeatherREST();
+        atualizarSocketMQTT();
+
+        setInterval(atualizarWeatherREST, 5000);
+        setInterval(atualizarSocketMQTT, 5000);
+    });
+</script>
+
+</body>
+</html>

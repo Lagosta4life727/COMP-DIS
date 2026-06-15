@@ -1,0 +1,173 @@
+/*Estilo geral*/
+body{
+    font-family: 'Times New Roman', Times, serif;
+    background:azure;
+    color: black;
+    padding: 20px;
+}
+
+/*Cabecalho*/
+.cabecalho{
+    display: flex;
+    justify-content: flex-end;
+}
+
+/*Título*/
+h1{
+    text-align: center;
+    color: darkblue;
+}
+
+/*Tabela geral*/
+table{
+    width: 80%;
+    border-collapse: collapse;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color:thistle;
+    margin: auto;
+}
+
+/*Linhas e colunas da tabela*/
+td, th{
+    padding: 10px;
+    text-align: left;
+}
+
+/*links*/
+a{
+    color:darkcyan;
+    font-weight: bold;
+    transition: color 0.5s;
+}
+
+a:hover{
+    color:skyblue;
+}
+
+/* Conteúdo principal */
+.conteudo {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+.conteudo2 {
+    max-width: 1200px;
+    width: 90%;
+    margin: 40px auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+/* Navegação */
+.navegacao a {
+    margin-left: 15px;
+}
+
+/* Botões simples */
+.botoes {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.botao,
+button.botao,
+input.botao {
+    border: none;
+    outline: none;
+    appearance: none;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: darkcyan;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    margin: 0 10px;
+}
+
+.botao:hover {
+    background-color: skyblue;
+    color: white;
+}
+
+/* Formulários */
+form {
+    text-align: center;
+}
+
+fieldset {
+    border-radius: 15px;
+    padding: 20px;
+    width: 300px;
+    margin: auto;
+}
+
+.fieldset2 {
+    border-radius: 15px;
+    padding: 20px;
+    width: 500px;
+    margin: auto;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="url"] {
+    width: 90%;
+    padding: 8px;
+    margin-top: 5px;
+}
+
+.img-loja {
+    max-width: 150px;
+    max-height: 150px;
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/*Dashboard*/
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+    margin-top: 0;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 5px;
+    color: #333;
+}
+
+.metric {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.value {
+    font-weight: bold;
+    color: #0056b3;
+}
+
+.timestamp {
+    font-size: 0.85em;
+    color: #666;
+    margin-top: 15px;
+    text-align: right;
+}

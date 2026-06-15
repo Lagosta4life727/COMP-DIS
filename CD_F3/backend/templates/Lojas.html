@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lojas</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Geral.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Mapa.css') }}">
+    
+    <link rel="stylesheet" href="/static/external/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="/static/external/markercluster/MarkerCluster.css" />
+    <link rel="stylesheet" href="/static/external/markercluster/MarkerCluster.Default.css" />
+</head>
+
+<body class="body2">
+
+<header class="cabecalho">
+    <nav class="navegacao">
+        <span class="user-name">{{ username }}</span>
+        <a href="/manageLojas" class="botao">Gerir Lojas</a>
+        <a href="/dashboard" class="botao">Dashboard IoT</a>
+        <a href="/Logout" class="botao">Logout</a>
+    </nav>
+</header>
+
+<main class="conteudo2">
+    <h1>Lojas</h1>
+
+    <form method="GET" action="/showLojas">
+        <fieldset class="fieldset2">
+            <legend>Filtrar por Categoria</legend>
+            <label><strong>Categoria:</strong></label><br>
+            <select name="categoria">
+                <option value="">Selecione uma Categoria</option>
+                {% for cat in categorias %}
+                <option value="{{ cat }}" {% if categoria_selecionada == cat %}selected{% endif %}>
+                    {{ cat }}
+                </option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <button type="submit" class="botao">Selecionar</button>
+        </fieldset>
+    </form>
+
+    <br>
+
+    <form method="GET" action="/showLojas">
+        <fieldset class="fieldset2">
+            <legend>Procurar por Nome</legend>
+            <label><strong>Nome da Loja:</strong></label><br>
+            <input type="text" name="nome" value="{{ nome_procurado if nome_procurado else '' }}">
+            <br><br>
+            <button type="submit" class="botao">Procurar</button>
+        </fieldset>
+    </form>
+
+    <br>
+    <div style="text-align: center; margin-top: 20px;">
+        {% if page > 1 %}
+            <a href="/showLojas?page={{ page - 1 }}&categoria={{ categoria_selecionada }}&nome={{ nome_procurado }}" class="botao">&lt; Anterior</a>
+        {% endif %}
+        
+        Página {{ page }} de {{ total_paginas }}
+        
+        {% if page < total_paginas %}
+            <a href="/showLojas?page={{ page + 1 }}&categoria={{ categoria_selecionada }}&nome={{ nome_procurado }}" class="botao">Próximo &gt;</a>
+        {% endif %}
+    </div>
+
+    <br>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Imagem</th>
+            <th>Categoria</th>
+            <th>Website</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for loja in lojas %}
+            <tr>
+                <td><strong>{{ loja.nome }}</strong></td>
+                <td>
+                    <img src="/static/images/{{ loja.foto }}" alt="{{ loja.nome }}" class="img-loja">
+                </td>
+                <td>{{ loja.categoria }}</td>
+                <td><a href="{{ loja.link }}" target="_blank">Link</a></td>
+                <td>
+                    <a href="/imagensLoja/{{ loja.id }}" class="botao">Adicionar Imagens</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <div id="map"></div>
+
+</main>
+
+<script src="/static/external/leaflet/leaflet.js"></script>
+<script src="/static/external/markercluster/leaflet.markercluster.js"></script>
+
+<script>
+    const lojas = {{ lojas_json|safe }};
+    
+    function initMap() {
+        const centerLat = 39.6948;
+        const centerLng = -8.1303;
+        const defaultZoom = 7;
+        
+        const map = L.map('map').setView([centerLat, centerLng], defaultZoom);
+        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        
+        const markers = L.markerClusterGroup();
+        
+        lojas.forEach(loja => {
+            if (loja.latitude && loja.longitude) {
+                const marker = L.marker([loja.latitude, loja.longitude], {
+                    title: `${loja.nome}`,
+                    alt: `Localização de ${loja.nome}`,
+                });
+
+                let mediaHTML = '';
+
+                // Mostrar vídeo se existir
+                if (loja.video && loja.video !== '') {
+                    mediaHTML += `
+                        <video width="250" height="150" controls>
+                            <source src="/static/images/${loja.video}" type="video/mp4">
+                            Seu navegador não suporta o vídeo.
+                        </video><br>
+                    `;
+                }
+
+                // Mostrar imagens se existirem
+                if (loja.imagens && loja.imagens.length > 0) {
+                    let imagensHTML = loja.imagens.map(foto => 
+                        `<img src="/static/images/${foto}" alt="${loja.nome}" class="popup-img" style="max-width:100px; margin:2px;">`
+                    ).join('');
+                    mediaHTML += `<div class="popup-images">${imagensHTML}</div>`;
+                }
+
+                // Se não houver vídeo nem imagens, mostrar apenas a foto principal
+                if (!mediaHTML || mediaHTML.trim() === '') {
+                    mediaHTML = `<img src="/static/images/${loja.foto}" alt="${loja.nome}" class="popup-img" style="max-width:100px;">`;
+                }
+
+                const popupContent = `
+                    <div class="loja-popup">
+                        <h3><strong>${loja.nome}</strong></h3>
+                        <p><strong>Categoria:</strong> ${loja.categoria}</p>
+                        <p><strong>Website:</strong> <a href="${loja.link}" target="_blank">Link</a></p>
+                        ${mediaHTML}
+                    </div>
+                `;
+                
+                marker.bindPopup(popupContent, { maxWidth: 300, minWidth: 200 });
+                markers.addLayer(marker);
+            }
+        });
+        
+        map.addLayer(markers);
+    }
+    
+    document.addEventListener('DOMContentLoaded', initMap);
+</script>
+
+</body>
+</html>

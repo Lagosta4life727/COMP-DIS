@@ -1,0 +1,125 @@
+{
+    "lojas": [
+        {
+            "nome": "Tsubaki2",
+            "categoria": "Anime",
+            "link": "https://www.tsubaki.pt/",
+            "foto": "tsubaki.jpg",
+            "latitude": 38.745941,
+            "longitude": -9.146632,
+            "imagens": [
+                "392444_294558210634124_143157449107535_627474_1455800_n.png",
+                "image.jpg"
+            ],
+            "video": "",
+            "id": 1
+        },
+        {
+            "id": 2,
+            "nome": "H&M",
+            "categoria": "roupa",
+            "link": "https://www2.hm.com/pt_pt/index.html",
+            "foto": "HeM.jpg",
+            "latitude": 38.777770803618324,
+            "longitude": -9.220072689439155,
+            "imagens": [],
+            "video": ""
+        },
+        {
+            "id": 3,
+            "nome": "FNAC",
+            "categoria": "eletronica",
+            "link": "https://www.fnac.pt/?origin=gmb_fnaccascais",
+            "foto": "FNAC.png",
+            "latitude": 38.7379735687844,
+            "longitude": -9.400615909784808,
+            "imagens": [
+                "img_1280x721uu2017-07-13-11-44-00-313495.png"
+            ],
+            "video": ""
+        },
+        {
+            "id": 4,
+            "nome": "Worten",
+            "categoria": "eletronica",
+            "link": "https://www.worten.pt/",
+            "foto": "Worten.png",
+            "latitude": 38.77746,
+            "longitude": -9.096235,
+            "imagens": [],
+            "video": ""
+        },
+        {
+            "id": 5,
+            "nome": "Paco Instrumentos Musicais",
+            "categoria": "instrumentos musicais",
+            "link": "https://www.facebook.com/Paco-Instrumentos-Musicais-1498512343779783/",
+            "foto": "Paco Instrumentos Musicais.jpg",
+            "latitude": 38.689244790392465,
+            "longitude": -9.354368728674261,
+            "imagens": [
+                "image.jpg",
+                "images.jpg",
+                "cascais-parede-paco-loja.jpg"
+            ],
+            "video": ""
+        },
+        {
+            "nome": "Salsa",
+            "categoria": "roupa",
+            "link": "https://www.salsajeans.com/pt/",
+            "foto": "Salsa.jpeg",
+            "latitude": 38.836154,
+            "longitude": -9.156546,
+            "imagens": [],
+            "video": "",
+            "id": 6
+        },
+        {
+            "id": 7,
+            "nome": "Lidl",
+            "categoria": "supermercado",
+            "link": "https://www.lidl.pt/",
+            "foto": "Lidl-Logo.svg.png",
+            "latitude": 0.0,
+            "longitude": 0.0,
+            "imagens": [],
+            "video": ""
+        },
+        {
+            "id": 8,
+            "nome": "Pingo Doce",
+            "categoria": "supermercado",
+            "link": "https://www.pingodoce.pt/?",
+            "foto": "channels4_profile.jpg",
+            "latitude": 0,
+            "longitude": 0,
+            "imagens": [],
+            "video": ""
+        },
+        {
+            "id": 9,
+            "nome": "FNAC",
+            "categoria": "eletronica",
+            "link": "https://www.fnac.pt/",
+            "foto": "FNAC.png",
+            "latitude": 38.77496342756752,
+            "longitude": -9.340582369607043,
+            "imagens": [
+                "FNAC-Norte-Shopping-76-scaled.jpg"
+            ],
+            "video": "abertura-fnac-sintra-nova-loja-cultura-e-tecnologia-em-sintra-fnacportugal-108_R98t5XEO.mp4"
+        },
+        {
+            "nome": "bershka",
+            "categoria": "roupa e acessorios",
+            "link": "https://www.bershka.com",
+            "foto": "",
+            "latitude": 0.0,
+            "longitude": 0.0,
+            "imagens": [],
+            "video": "",
+            "id": 10
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+#map{
+    height: 500px;
+    width: 100%;
+}
+
+.loja-popup h3 {
+    text-align: center;
+    margin: 10px 0
+}
+
+.loja-popup img{
+    max-width: 150px;
+    max-height: 150px;
+}

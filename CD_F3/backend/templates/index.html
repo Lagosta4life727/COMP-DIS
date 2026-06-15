@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Projeto</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Geral.css') }}">
+    
+</head>
+
+<body>
+
+    <header class="cabecalho">
+        <nav class="navegacao">
+        </nav>
+    </header>
+
+    <main class="conteudo">
+        <h1>Bem-vindo ao Projeto</h1>
+
+        <h2>Descrição</h2>
+        <p>
+            Este projeto permite procurar e visualizar lojas através de um sistema
+            simples de autenticação.
+        </p>
+        <p>
+            Comece por fazer o seu <strong>registo</strong> e, após isso,
+            utilize o <strong>login</strong> para aceder às lojas disponíveis.
+        </p>
+
+        <div class="botoes">
+            <a class="botao" href="/Registo">Criar Conta</a>
+            <a class="botao" href="/Login">Entrar</a>
+        </div>
+    </main>
+
+</body>
+</html>

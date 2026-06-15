@@ -1,0 +1,32 @@
+[
+    {
+        "email": "teste@gmail.com",
+        "estado": "ativo",
+        "password": "123",
+        "user": "teste"
+    },
+    {
+        "user": "lhl",
+        "password": "0000",
+        "email": "leo.amaral@gmail.com",
+        "estado": "inativo"
+    },
+    {
+        "user": "15318",
+        "password": "qwer",
+        "email": "carlos.peixoto@outlook.com",
+        "estado": "inativo"
+    },
+    {
+        "email": "isa@gmail.com",
+        "estado": "inativo",
+        "password": "12345",
+        "user": "isabel"
+    },
+    {
+        "email": "mar@gmail.com",
+        "estado": "inativo",
+        "password": "0000",
+        "user": "mar"
+    }
+]

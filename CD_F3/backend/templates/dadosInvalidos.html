@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Projeto</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='CSS/Geral.css') }}">
+
+		<meta http-equiv="refresh" content="5; url={{ redirectURL }}">
+	</head>
+	
+	<body>
+		<h1 align="center">Erro!!!</h1>
+		<br>
+		<br>
+		<h2	align="center">Detalhes: {{ errorMessage }}</h2>
+
+	</body>
+</html>

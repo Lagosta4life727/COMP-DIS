@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registo</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Geral.css') }}">
+    <script type="text/javascript" src="/static/scripts/forms.js"></script>
+</head>
+
+<body>
+
+    <header class="cabecalho">
+        <nav class="navegacao">
+        </nav>
+    </header>
+
+    <main class="conteudo">
+        <h1>Registo</h1>
+
+        <p>Preencha os dados para criar uma nova conta.</p>
+
+        <form action="/doRegisto" method="POST" name="FormRegisto" onsubmit="return validarRegisto()">
+
+            <fieldset>
+                <legend>Dados de Registo</legend>
+
+                <label for="usernameID">Nome de utilizador</label><br>
+                <input
+                    type="text"
+                    id="usernameID"
+                    name="username"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                    placeholder="Digite o username">
+                <small>(3–20 caracteres)</small>
+                <br><br>
+
+                <label for="emailID">Email</label><br>
+                <input
+                    type="email"
+                    id="emailID"
+                    name="email"
+                    placeholder="exemplo@email.com"
+                    required>
+                <br><br>
+
+                <label for="passwordID">Palavra-chave</label><br>
+                <input
+                    type="password"
+                    id="passwordID"
+                    name="passwordName"
+                    required
+                    minlength="3"
+                    maxlength="7"
+                    placeholder="Digite a password">
+                <small>(3–7 caracteres)</small>
+                <br><br>
+
+                <label for="confirmpasswordID">Confirmar palavra-chave</label><br>
+                <input
+                    type="password"
+                    id="confirmpasswordID"
+                    name="confirmPassword"
+                    required
+                    placeholder="Repita a password">
+            </fieldset>
+
+            <div class="botoes">
+                <button type="submit" class="botao">Registar</button>
+                <button type="reset" class="botao">Limpar</button>
+            </div>
+
+            <div class="botoes">
+                <a href="/" class="botao">Voltar</a>
+            </div>
+
+        </form>
+    </main>
+
+</body>
+</html>

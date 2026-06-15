@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gerir Lojas</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Geral.css') }}">
+</head>
+
+<body class="body2">
+
+<header class="cabecalho">
+    <nav class="navegacao">
+        <span class="user-name">{{ username }}</span>
+        <a href="/showLojas" class="botao">Lojas (Mapa)</a>
+        <a href="/dashboard" class="botao">Dashboard IoT</a>
+        <a href="/Logout" class="botao">Logout</a>
+    </nav>
+</header>
+
+<main class="conteudo2">
+    <h1>Gerir Lojas</h1>
+
+    <h2>Adicionar/Editar Loja</h2>
+
+    <form method="POST" action="/saveLoja" enctype="multipart/form-data">
+
+        {% if loja_data %}
+        <input type="hidden" name="loja_id" value="{{ loja_data.id }}">
+        {% endif %}
+        <input type="hidden" name="current_foto" value="{{ loja_data.foto if loja_data else '' }}">
+        <input type="hidden" name="page" value="{{ page }}">
+        
+        <fieldset class="fieldset2">
+            <legend>Informações da Loja</legend>
+
+            <label>Nome:</label><br>
+            <input type="text" name="nome" value="{{ loja_data.nome if loja_data else '' }}" required>
+            <br><br>
+
+            <label>Categoria:</label><br>
+            <input type="text" name="categoria" value="{{ loja_data.categoria if loja_data else '' }}" required>
+            <br><br>
+
+            <label>Website:</label><br>
+            <input type="url" name="link" value="{{ loja_data.link if loja_data else '' }}" required>
+            <br><br>
+
+            <label>Imagem:</label><br>
+            <input type="file" name="foto" accept="image/*">
+        </fieldset>
+
+        <fieldset class="fieldset2">
+            <legend>Localização</legend>
+
+            <label>Latitude:</label><br>
+            <input type="number" step="any" name="latitude" value="{{ loja_data.latitude if loja_data else '' }}">
+            <br><br>
+
+            <label>Longitude:</label><br>
+            <input type="number" step="any" name="longitude" value="{{ loja_data.longitude if loja_data else '' }}">
+        </fieldset>
+
+        <div class="botoes">
+            <button type="submit" class="botao">Guardar</button>
+            <a href="/showLojas" class="botao">Voltar</a>
+        </div>
+
+    </form>
+
+    <hr>
+
+    <h2>Lista de Lojas</h2>
+    <table border="1" align="center">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Imagem</th>
+                <th>Categoria</th>
+                <th>Website</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for loja in lojas %}
+            <tr>
+                <td><strong>{{ loja.nome }}</strong></td>
+                <td>
+                    {% if loja.foto %}
+                    <img src="/static/images/{{ loja.foto }}" alt="{{ loja.nome }}" class="img-loja">
+                    {% endif %}
+                </td>
+                <td>{{ loja.categoria }}</td>
+                <td><a href="{{ loja.link }}" target="_blank">Link</a></td>
+                <td class="opcoes">
+                    <a href="/editLoja/{{ loja.id }}?page={{ page }}">Editar</a> |
+                    <a href="/deleteLoja/{{ loja.id }}?page={{ page }}">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div style="text-align: center; margin-top: 20px;">
+        {% if page > 1 %}
+            <a href="/manageLojas?page={{ page - 1 }}" class="botao">&lt; Anterior</a>
+        {% endif %}
+        
+        Página {{ page }} de {{ total_paginas }}
+        
+        {% if page < total_paginas %}
+            <a href="/manageLojas?page={{ page + 1 }}" class="botao">Próximo &gt;</a>
+        {% endif %}
+    </div>
+
+</main>
+
+</body>
+</html>

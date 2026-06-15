@@ -1,0 +1,38 @@
+services:
+
+  data-service:
+    build: ./data_service
+    networks:
+      - internal
+    restart: unless-stopped
+
+    volumes:
+      - ./data_service/utilizadores.json:/app/utilizadores.json
+      - ./data_service/dados.json:/app/dados.json
+
+  rest-api:
+    build: ./rest_api
+    networks:
+      - internal
+      - backend_net
+    depends_on:
+      - data-service
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    ports:
+      - "8080:80"
+    networks:
+      - backend_net
+    depends_on:
+      - rest-api
+    restart: unless-stopped
+
+networks:
+  internal:
+    driver: bridge
+    internal: true
+
+  backend_net:
+    driver: bridge

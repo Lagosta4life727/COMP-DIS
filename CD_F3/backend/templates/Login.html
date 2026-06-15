@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+	<script type="text/javascript" src="/static/scripts/forms.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Geral.css') }}">
+</head>
+
+<body>
+
+    <header class="cabecalho">
+        <nav class="navegacao">
+        </nav>
+    </header>
+
+    <main class="conteudo">
+        <h1>Login</h1>
+
+        <p>Introduza os seus dados para aceder às lojas disponíveis.</p>
+
+        <form action="/doLogin" method="POST" onsubmit="return validarLogin()">
+
+            <fieldset>
+                <legend>Dados de Login</legend>
+
+                <label for="vatID">Utilizador</label><br>
+                <input
+                    type="text"
+                    id="vatID"
+                    name="vatName"
+                    placeholder="Digite o seu username"
+                    required>
+                <br><br>
+
+                <label for="passwordID">Palavra-chave</label><br>
+                <input
+                    type="password"
+                    id="passwordID"
+                    name="passwordName"
+                    placeholder="Digite a sua password"
+                    required>
+            </fieldset>
+
+            <div class="botoes">
+                <button type="submit" class="botao">Entrar</button>
+                <button type="reset" class="botao">Limpar</button>
+            </div>
+
+            <div class="botoes">
+                <a href="/" class="botao">Voltar</a>
+            </div>
+
+        </form>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adicionar Imagem/Video - {{ loja.nome }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/Geral.css') }}">
+    <style>
+        .preview-images img {
+            max-width: 120px;
+            margin: 5px;
+            border-radius: 4px;
+        }
+        .preview-video {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body class="body2">
+
+<header class="cabecalho">
+    <nav class="navegacao">
+        <span class="user-name">{{ username }}</span>
+        <a href="/Logout" class="botao">Logout</a></nav>
+</header>
+
+<main class="conteudo2">
+    <h1>Adicionar Mídia à Loja: {{ loja.nome }}</h1>
+
+    <fieldset class="fieldset2">
+        <legend>Vídeo Atual</legend>
+        {% if loja.video %}
+            <div class="preview-video">
+                <video width="320" height="240" controls>
+                    <source src="/static/images/{{ loja.video }}" type="video/mp4">
+                    O seu navegador não suporta o elemento de vídeo.
+                </video>
+            </div>
+        {% else %}
+            <p>Nenhum vídeo adicionado ainda.</p>
+        {% endif %}
+    </fieldset>
+
+    <fieldset class="fieldset2">
+        <legend>Imagens Atuais</legend>
+        {% if loja.imagens %}
+            <div class="preview-images">
+                {% for img in loja.imagens %}
+                    <img src="/static/images/{{ img }}" alt="{{ loja.nome }}">
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Nenhuma imagem adicionada ainda.</p>
+        {% endif %}
+    </fieldset>
+
+    <fieldset class="fieldset2">
+        <legend>Adicionar Mídia</legend>
+
+        <!-- Formulário para adicionar vídeo -->
+        <form method="POST" action="/uploadVideo/{{ loja.id }}?username={{username}}" enctype="multipart/form-data">
+            <label for="video">Escolher vídeo (MP4):</label><br>
+            <input type="file" name="video" id="video" accept="video/mp4"><br><br>
+            <button type="submit" class="botao">Adicionar Vídeo</button>
+        </form>
+        <br>
+
+        <!-- Formulário para adicionar imagens -->
+        <form method="POST" action="/uploadImagens/{{ loja.id }}?username={{username}}" enctype="multipart/form-data">
+            <label for="imagens">Escolher imagens:</label><br>
+            <input type="file" name="imagens" id="imagens" multiple accept="image/*"><br><br>
+            <button type="submit" class="botao">Adicionar Imagem</button>
+        </form>
+        <br>
+
+        <div class="botoes">
+            <button class="botao" id="resetAll">Limpar</button>
+            <a href="/showLojas" class="botao">Voltar</a>
+        </div>
+
+    </fieldset>
+
+</main>
+
+<script>
+    // Resetar todos os formulários
+    document.getElementById('resetAll').addEventListener('click', function() {
+        document.querySelectorAll('form').forEach(form => form.reset());
+    });
+</script>
+
+</body>
+</html>
